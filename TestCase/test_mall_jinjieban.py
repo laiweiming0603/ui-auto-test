@@ -1,17 +1,11 @@
 from time import sleep
 
-from Common.Baseui import baseUI
-
-
-
+import pytest
 
 class Test_mall:
-    def test_fahuo(self,driver):
-        #点击订单
-        base = baseUI(driver)
-        base.click('点击订单','(//span[contains(text(),"订单")])[1]')
-        #点击订单列表
-        base.click('点击订单列表','//span[contains(text(),"订单列表")]')
+    @pytest.mark.fahuo
+    def test_fahuo(self,base):
+        base.driver.get("http://192.168.60.132/#/oms/order")
         #点击订单状态
         base.click('点击订单状态', '//label[contains(text(),"订单状态")]/following-sibling::div//input')
         #选择待发货
@@ -21,7 +15,7 @@ class Test_mall:
         #点击第一条订单的订单发货
         base.click('点击第一条订单发货','(//span[contains(text(),"订单发货")])[1]')
         #断言
-        assert '发货列表' in driver.page_source
+        assert '发货列表' in base.driver.page_source
         #点击物流公司
         base.click('点击物流公司','//input[@placeholder="请选择物流公司"]')
         #选择顺丰快递
@@ -37,11 +31,10 @@ class Test_mall:
         # 断言
         assert '发货成功' in text
 
-    def test_th(self,driver):
-        # 点击订单
-        base = baseUI(driver)
-        base.click('点击订单', '(//span[contains(text(),"订单")])[1]')
-        #点击退货原因设置
+    @pytest.mark.tuihuo
+    def test_th(self,base):
+        base.driver.get("http://192.168.60.132/#/oms/returnApply")
+        #点击退货申请处理
         base.click('点击退货申请处理', '(//span[contains(text(),"申请处理")])[1]')
         #点击处理状态
         base.click('点击处理状态', '//label[contains(text(),"处理状态")]//following-sibling::div//input')
